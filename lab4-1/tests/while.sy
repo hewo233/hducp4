@@ -1,0 +1,21 @@
+int main()
+{
+    int i = 10;
+    int j = 0;
+    while(i > 0)
+    {
+        i = i - 1;
+        
+        if(i == 9) 
+        {
+            continue;
+        }
+
+        j = j + 2;
+
+        if(j > 10)
+        {
+            break;
+        }
+    }
+}

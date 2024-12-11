@@ -1,0 +1,7 @@
+int main()
+{
+    int t_flag = 1;
+    int f_flag = !t_flag;
+    int tandf_flag = t_flag && f_flag;
+    int torf_flag = t_flag || f_flag;
+}

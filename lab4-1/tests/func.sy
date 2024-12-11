@@ -1,0 +1,11 @@
+int f(int i)
+{
+    return i+1;
+}
+
+int main()
+{
+    int i= f(0123);
+    int k = 2;
+    int r = f(k);
+}
