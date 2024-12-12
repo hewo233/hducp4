@@ -17,24 +17,35 @@ public class Main {
         // 使用SysYLexer对输入进行词法分析
         SysYLexer lexer = new SysYLexer(input);
 
+        // 自定义 Lexer 错误监听器
+        lexer.removeErrorListeners();
+
+        LexerErrorListener myLexerErrorListener = new LexerErrorListener();
+        lexer.addErrorListener(myLexerErrorListener);
+
+        // 检查是否有解析错误
+        if (myLexerErrorListener.hasErr()) {
+            System.out.println("Parsing encountered errors. Exiting.");
+            System.exit(0);
+        }
+
         // 创建一个用于保存词法分析器生成的tokens的缓冲区
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
         // 创建一个解析器，用于分析token流
         SysYParser parser = new SysYParser(tokens);
 
-        // 移除默认的错误监听器
+        // 自定义 Parser 错误监听器
         parser.removeErrorListeners();
 
-        // 创建并添加自定义的错误监听器
-        ParserErrorListener myErrorListener = new ParserErrorListener();
-        parser.addErrorListener(myErrorListener);
+        ParserErrorListener myParserErrorListener = new ParserErrorListener();
+        parser.addErrorListener(myParserErrorListener);
 
         // 指定开始规则，这里假设是'program'
         ParseTree tree = parser.program();
 
         // 检查是否有解析错误
-        if (myErrorListener.hasErr()) {
+        if (myParserErrorListener.hasErr()) {
             System.out.println("Parsing encountered errors. Exiting.");
             System.exit(0);
         }
