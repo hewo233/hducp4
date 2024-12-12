@@ -1,0 +1,15 @@
+int a;
+int a;
+int func(int x) {
+    return x;
+}
+int func(int y) {
+    return y;
+}
+int main() {
+    int z;
+    a = 5;
+    func(10);
+    undefined_var = 20;
+    undefined_func();
+}
