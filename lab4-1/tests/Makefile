@@ -1,4 +1,5 @@
 CC	:=	gcc
+
 CFLAGS	:=	-x c -o
 
 SRCS	:=	func.sy inc.sy logic.sy number.sy while.sy
