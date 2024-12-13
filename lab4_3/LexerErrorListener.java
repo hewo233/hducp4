@@ -15,7 +15,7 @@ class OutputErrHelper {
             }
             final String ANSI_RED = "\u001B[31m";
             final String ANSI_RESET = "\u001B[0m";
-            System.out.println(ANSI_RED + "Error type A at line " + line + ": " + msg + ANSI_RESET);
+            System.out.println(ANSI_RED + "Error type Lexer at line " + line + ": " + msg + ANSI_RESET);
             lastLine = line;
         }
 

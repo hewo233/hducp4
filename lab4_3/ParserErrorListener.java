@@ -15,7 +15,7 @@ public class ParserErrorListener extends BaseErrorListener {
             }
             final String ANSI_RED = "\u001B[31m";
             final String ANSI_RESET = "\u001B[0m";
-            System.out.println(ANSI_RED + "Error type B at line " + line + ": " + msg + ANSI_RESET);
+            System.out.println(ANSI_RED + "Error type Parser at line " + line + ": " + msg + ANSI_RESET);
             lastLine = line;
         }
 
