@@ -1,39 +1,9 @@
 lexer grammar SysYLexer;
 
-// Operators
-ASSIGN      : '=';
-ADD         : '+';
-SUB         : '-';
-MUL         : '*';
-DIV         : '/';
-MOD         : '%';
-LT          : '<';
-GT          : '>';
-LEQ         : '<=';
-GEQ         : '>=';
-EQ          : '==';
-NEQ         : '!=';
-INC         : '++';
-DEC         : '--';
-// Logic
-NOT         : '!';
-AND         : '&&';
-OR          : '||';
-
-// Separators
-LPAREN      : '(';
-RPAREN      : ')';
-LBRACE      : '{';
-RBRACE      : '}';
-LBRACKET    : '[';
-RBRACKET    : ']';
-COMMA       : ',';
-SEMI        : ';';
-
 // Keywords
 CONST : 'const';
-VOID : 'void';
 INT : 'int';
+VOID : 'void';
 IF : 'if';
 ELSE : 'else';
 WHILE : 'while';
@@ -41,29 +11,59 @@ BREAK : 'break';
 CONTINUE : 'continue';
 RETURN : 'return';
 
-// Identifiers and constants
-IDent : (LETTER | '_') (LETTER | DIGIT | '_')*;
+// Operators
+ADD : '+';
+SUB : '-';
+MUL : '*';
+DIV : '/';
+MOD : '%';
+ASSIGN : '=';
+EQ : '==';
+NEQ : '!=';
+LT : '<';
+GT : '>';
+LE : '<=';
+GE : '>=';
+NOT : '!';
+AND : '&&';
+OR : '||';
 
-// Numbers
-DECI:    [1-9][0-9]*;
-OCT :   '0' [0-7]+;
-HEX :   '0x' [0-9a-fA-F]+ | '0X' [0-9a-fA-F]+;
-FLOAT_CONST : ('+' | '-')? (DECI '.' DIGIT* | '.' DIGIT+) (('e' | 'E') ('+' | '-')? DECI)?;
+// Delimiters
+LPAREN : '(';
+RPAREN : ')';
+LBRACE : '{';
+RBRACE : '}';
+LBRACK : '[';
+RBRACK : ']';
+COMMA : ',';
+SEMI : ';';
 
-// Arrays
-ARRAY : ('[' DECI ']'* | '[' FLOAT_CONST ']');
+// Constants
+DECIMAL_CONST : [1-9][0-9]* | '0';
 
-// Comments
-SL_COMMENT: '//' ~[\r\n]* -> skip;
-ML_COMMENT: '/*' .*? '*/' -> skip;
-DOCS_COMMENT: '/**' .*? '*/' -> skip;
+OCTAL_CONST : '0' [0-7]+ ;
 
-// Whitespace
+HEXADECIMAL_CONST : ('0x'|'0X')[0-9a-fA-F]+ ;
+
+// Identifiers
+IDENT : [a-zA-Z_][a-zA-Z_0-9]*;
+
+// Whitespace and comments
 WS : [ \t\r\n]+ -> skip;
+LINE_COMMENT : '//' .*? '\r'? '\n' -> skip;
+BLOCK_COMMENT : '/*' .*? '*/' -> skip;
 
-// Fragments
-fragment LETTER : [a-zA-Z_];
-fragment DIGIT : [0-9];
+ERR_OCT : '0' [0-9]* {
+    String txt = getText();
+    if (!txt.matches("0[0-7]+")) {
+        setType(ERROR_NUMBER);
+    }
+};
 
-// 捕获非法字符并将其送入到一个错误通道
-ILLEGAL_CHAR : . -> channel(HIDDEN);
+ERR_HEX : ('0x'|'0X')[0-9a-fA-F]*[g-zG-Z][0-9a-zA-Z]* {
+    setType(ERROR_NUMBER);
+};
+
+// error process
+ERROR_CHAR : . ;   
+ERROR_NUMBER : . ; 
